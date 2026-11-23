@@ -51,7 +51,7 @@
 | **言語・基盤** | Java 17 / Spring Boot 3.x | LTSバージョンの採用、AutoConfigurationによる迅速なAPI構築 |
 | **データアクセス** | MyBatis / PageHelper | 動的SQLによる柔軟な複合条件検索・ページネーション実装 |
 | **データベース** | MySQL 8.0 | 正規化されたリレーショナル設計（部署・従業員・職歴・監査ログ） |
-| **JWT認証** | JWT (JSON Web Token) + Filter | ステートレス認証と `ThreadLocal` によるログイン操作者IDの透過的伝播 |
+| **認証** | JWT (JSON Web Token) + Filter | ステートレス認証と `ThreadLocal` によるログイン操作者IDの透過的伝播 |
 | **共通処理・品質** | Spring AOP / `@RestControllerAdvice` | カスタムアノテーション `@Log` による操作監査、グローバル例外集約処理 |
 | **ビルド・検証** | Maven / Postman / DataGrip | 依存関係管理、全エンドポイントの正常系・異常系APIテスト検証 |
 
