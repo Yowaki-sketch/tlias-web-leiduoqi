@@ -112,7 +112,7 @@
 ### セットアップ手順
 1. **リポジトリのクローン**
    ```bash
-   git clone https://github.com/Yowaki-sketch/tlias-web-leiduoqi.git(https://github.com/leiduoqi/tlias-web-leiduoqi.git)
+   git clone https://github.com/Yowaki-sketch/tlias-web-leiduoqi.git
    cd tlias-web-leiduoqi
    ```
 2. **データベースの初期化**
