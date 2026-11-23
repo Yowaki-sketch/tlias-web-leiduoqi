@@ -1,0 +1,21 @@
+# Compiled class file & Maven target
+target/
+*.jar
+*.war
+*.ear
+
+# IDE files
+.idea/
+*.iml
+*.ipr
+*.iws
+.vscode/
+
+# Local uploads & logs
+uploads/
+logs/
+*.log
+
+# OS generated files
+.DS_Store
+Thumbs.db

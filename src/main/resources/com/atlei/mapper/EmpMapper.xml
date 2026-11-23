@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.atlei.mapper.EmpMapper">
+
+    <!-- ID指定による従業員基本情報の動的更新 -->
+    <update id="updateById">
+        update emp
+        <set>
+            <if test="username != null and username != ''">username = #{username},</if>
+            <if test="password != null and password != ''">password = #{password},</if>
+            <if test="name != null and name != ''">name = #{name},</if>
+            <if test="gender != null">gender = #{gender},</if>
+            <if test="phone != null and phone != ''">phone = #{phone},</if>
+            <if test="job != null">job = #{job},</if>
+            <if test="salary != null">salary = #{salary},</if>
+            <if test="image != null and image != ''">image = #{image},</if>
+            <if test="entryDate != null">entry_date = #{entryDate},</if>
+            <if test="deptId != null">dept_id = #{deptId},</if>
+            <!-- update_timeは更新時に必ず設定するため固定で代入（<set>ブロック内の有効な更新項目を保証） -->
+            update_time = #{updateTime}
+        </set>
+        where id = #{id}
+    </update>
+
+    <!-- IDリストに基づく従業員基本情報の一括削除 -->
+    <delete id="deleteByIds">
+        delete from emp where id in
+        <foreach collection="ids" item="id" separator="," open="(" close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <!-- 条件指定による従業員一覧の動的検索（部署名を結合） -->
+    <select id="list" resultType="com.atlei.pojo.Emp">
+        select e.*, d.name as deptName
+        from emp as e
+        left join dept as d on e.dept_id = d.id
+        <where>
+            <if test="name != null and name != ''">e.name like concat('%', #{name}, '%')</if>
+            <if test="gender != null">and e.gender = #{gender}</if>
+            <if test="begin != null and end != null">and e.entry_date between #{begin} and #{end}</if>
+        </where>
+        order by e.update_time desc
+    </select>
+
+    <!-- 役職別の従業員数集計 -->
+    <select id="countEmpJobData" resultType="java.util.Map">
+        select (case
+        when job = 1 then 'プログラマー'
+        when job = 2 then '保守エンジニア'
+        when job = 3 then 'マネージャー'
+        when job = 4 then '営業担当'
+        when job = 5 then '総務担当'
+        else 'その他' end) as pos,
+        count(*) as num
+        from emp
+        group by job
+        order by num
+    </select>
+
+    <!-- 性別ごとの従業員数集計 -->
+    <select id="countEmpGenderData" resultType="java.util.Map">
+        select if(gender = 1, '男性社員', '女性社員') as name, count(*) as value
+        from emp
+        group by gender
+    </select>
+
+</mapper>
